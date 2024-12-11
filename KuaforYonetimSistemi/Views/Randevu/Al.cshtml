@@ -1,0 +1,28 @@
+﻿@model KuaforYonetimSistemi.Models.Randevu
+
+<h1>Randevu Al</h1>
+
+<p><strong>Çalışan:</strong> @ViewBag.Calisan.AdSoyad</p>
+<p><strong>İşlem:</strong> @ViewBag.Islem.Ad</p>
+
+<form method="post" asp-action="Tamamla">
+    <input type="hidden" name="calisanId" value="@ViewBag.Calisan.Id" />
+    <input type="hidden" name="islemId" value="@ViewBag.Islem.Id" />
+
+    <div>
+        <label for="tarih">Randevu Tarihi:</label>
+        <input type="datetime-local" name="tarih" id="tarih" required />
+    </div>
+
+    <div>
+        <label for="kullaniciId">Kullanıcı:</label>
+        <select name="kullaniciId" id="kullaniciId" required>
+            @foreach (var kullanici in ViewBag.Kullanicilar as IEnumerable<KuaforYonetimSistemi.Models.Kullanici>)
+            {
+                <option value="@kullanici.Id">@kullanici.KullaniciAdi</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit">Randevuyu Tamamla</button>
+</form>
