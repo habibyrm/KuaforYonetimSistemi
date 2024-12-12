@@ -104,23 +104,35 @@
         <div class="form">
             @if (ViewBag.Basari != null)
             {
-                <div class="alert">@ViewBag.Basari</div>
+                    <div class="alert">@ViewBag.Basari</div>
             }
             @if (ViewBag.Hata != null)
             {
-                <div class="error">@ViewBag.Hata</div>
+                    <div class="error">@ViewBag.Hata</div>
             }
 
             <form asp-action="KayitOl" method="post">
                 <label><b>KAYIT</b></label><br />
                 <br />
-                <input type="text" name="AdSoyad" placeholder="Adınız" value="@Model?.KullaniciAdi" required />
-                <input type="email" name="Email" placeholder="Mail Adresiniz" value="@Model?.Email" required />
-                <input type="password" name="Sifre" placeholder="Şifreniz" required />
+                <input asp-for="KullaniciAdi" class="form-control" placeholder="Kullanıcı Adınız" />
+                <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+
+                <input asp-for="Email" class="form-control" placeholder="E-posta Adresiniz" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+
+                <input asp-for="Sifre" type="password" class="form-control" placeholder="Şifreniz" />
+                <span asp-validation-for="Sifre" class="text-danger"></span>
+
                 <button type="submit">Kayıt Ol</button>
                 <p class="mesaj">Zaten Üye Misin? <a asp-action="GirisYap">Giriş Yap</a></p>
             </form>
         </div>
     </div>
+
+    @section Scripts {
+            <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
+    }
 </body>
 </html>

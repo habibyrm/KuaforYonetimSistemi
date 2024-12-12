@@ -21,9 +21,15 @@ namespace KuaforYonetimSistemi.Controllers
         [HttpPost]
         public IActionResult KayitOl(Kullanici musteri)
         {
+            if (string.IsNullOrWhiteSpace(musteri.Email))
+            {
+                ViewBag.Hata = "E-posta adresi boş bırakılamaz.";
+                return View(musteri);
+            }
+
             if (ModelState.IsValid)
             {
-                // E-posta kontrolü (aynı e-posta ile kayıt engellenir)
+                // E-posta kontrolü
                 if (_context.Kullanici.Any(m => m.Email == musteri.Email))
                 {
                     ViewBag.Hata = "Bu e-posta adresi zaten kayıtlı.";
@@ -41,6 +47,7 @@ namespace KuaforYonetimSistemi.Controllers
             ViewBag.Hata = "Geçersiz giriş bilgileri, lütfen tekrar deneyin.";
             return View(musteri);
         }
+
 
         // Giriş yap sayfası
         public IActionResult GirisYap()

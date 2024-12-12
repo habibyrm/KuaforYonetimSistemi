@@ -19,6 +19,6 @@ namespace KuaforYonetimSistemi.Models
         public string Rol { get; set; } = "Kullanici"; // Varsayılan: Kullanici
 
         // Kullanıcının ilişkili randevuları
-        public ICollection<Randevu> Randevular { get; set; }
+        public ICollection<Randevu> Randevular { get; set; } = new List<Randevu>();
     }
 }
