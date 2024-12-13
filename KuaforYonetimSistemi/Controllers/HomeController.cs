@@ -18,6 +18,19 @@ namespace KuaforYonetimSistemi.Controllers
             return View();
         }
 
+        public IActionResult RandevuAl()
+        {
+            // Kullanýcý oturum açmýþ mý kontrol et
+            if (HttpContext.Session.GetString("KullaniciId") == null)
+            {
+                // Oturum açmamýþsa Giriþ Yap ekranýna yönlendir
+                return RedirectToAction("GirisYap", "Kullanici");
+            }
+
+            // Oturum açmýþsa Randevu ekranýna yönlendir
+            return RedirectToAction("Index", "Randevu");
+        }
+
         public IActionResult Privacy()
         {
             return View();

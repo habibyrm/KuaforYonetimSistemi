@@ -61,10 +61,11 @@ namespace KuaforYonetimSistemi.Controllers
             var kullanici = _context.Kullanici.FirstOrDefault(k => k.Email == email);
             if (kullanici != null && SifreDogrula(sifre, kullanici.Sifre))
             {
+                // Kullanıcı bilgilerini Session'a kaydet
                 HttpContext.Session.SetString("KullaniciId", kullanici.Id.ToString());
                 HttpContext.Session.SetString("AdminMi", (kullanici.Rol == "Admin").ToString());
 
-                // Giriş başarılıysa HomeController'daki Index metoduna yönlendir
+                // Giriş başarılı, Home controller'a yönlendir
                 return RedirectToAction("Index", "Home");
             }
 

@@ -7,7 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Oturum zaman aþýmý (30 dakika)
+    options.Cookie.HttpOnly = true; // Güvenlik için sadece HTTP üzerinden eriþilebilir
+    options.Cookie.IsEssential = true; // GDPR uyumluluðu için gerekli
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,10 +28,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication(); // Eðer kimlik doðrulama kullanýyorsanýz
 app.UseAuthorization();
+
+app.UseSession(); // Session middleware'ini ekle
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Kullanici}/{action=GirisYap}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

@@ -1,9 +1,11 @@
-﻿@model KuaforYonetimSistemi.Models.Randevu
+﻿@{
+    ViewData["Title"] = "Randevu Tamamla";
+}
 
-<h1>Randevu Al</h1>
-
-<p><strong>Çalışan:</strong> @ViewBag.Calisan.AdSoyad</p>
-<p><strong>İşlem:</strong> @ViewBag.Islem.Ad</p>
+<div>
+    <p><strong>Çalışan:</strong> @ViewBag.Calisan.AdSoyad</p>
+    <p><strong>İşlem:</strong> @ViewBag.Islem.Ad</p>
+</div>
 
 <form method="post" asp-action="Tamamla">
     <input type="hidden" name="calisanId" value="@ViewBag.Calisan.Id" />
@@ -16,3 +18,12 @@
 
     <button type="submit">Randevuyu Tamamla</button>
 </form>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
