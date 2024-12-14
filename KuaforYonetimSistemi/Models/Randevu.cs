@@ -28,5 +28,9 @@ namespace KuaforYonetimSistemi.Models
 
         public decimal Kazanc { get; set; } // İşlemden elde edilen kazanç
         public int IslemSuresi { get; set; } // İşlem süresi (dakika)
+
+        [Required]
+        [StringLength(50)]
+        public string Durum { get; set; } = "Beklemede"; // Varsayılan: Beklemede (Onaylandı, Reddedildi)
     }
 }

@@ -23,7 +23,6 @@ namespace KuaforYonetimSistemi.Models
                 .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -54,6 +53,11 @@ namespace KuaforYonetimSistemi.Models
                 .WithMany(k => k.Randevular)
                 .HasForeignKey(r => r.KullaniciId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Randevu Durum özelliği için varsayılan değer ayarlama
+            modelBuilder.Entity<Randevu>()
+                .Property(r => r.Durum)
+                .HasDefaultValue("Beklemede"); // Varsayılan: Beklemede
 
             SeedData(modelBuilder);
         }
@@ -109,13 +113,12 @@ namespace KuaforYonetimSistemi.Models
                 new CalisanIslem { Id = 14, CalisanId = 5, IslemId = 8 }
             );
 
-
             // Randevular
             modelBuilder.Entity<Randevu>().HasData(
-                new Randevu { Id = 1, CalisanId = 1, IslemId = 1, Tarih = DateTime.UtcNow.AddDays(1), KullaniciId = 2, Kazanc = 50, IslemSuresi = 30 },
-                new Randevu { Id = 2, CalisanId = 2, IslemId = 4, Tarih = DateTime.UtcNow.AddDays(2), KullaniciId = 3, Kazanc = 120, IslemSuresi = 60 },
-                new Randevu { Id = 3, CalisanId = 3, IslemId = 5, Tarih = DateTime.UtcNow.AddDays(3), KullaniciId = 4, Kazanc = 200, IslemSuresi = 90 },
-                new Randevu { Id = 4, CalisanId = 4, IslemId = 9, Tarih = DateTime.UtcNow.AddDays(4), KullaniciId = 5, Kazanc = 250, IslemSuresi = 120 }
+                new Randevu { Id = 1, CalisanId = 1, IslemId = 1, Tarih = DateTime.UtcNow.AddDays(1), KullaniciId = 2, Kazanc = 50, IslemSuresi = 30, Durum = "Onaylandı" },
+                new Randevu { Id = 2, CalisanId = 2, IslemId = 4, Tarih = DateTime.UtcNow.AddDays(2), KullaniciId = 3, Kazanc = 120, IslemSuresi = 60, Durum = "Beklemede" },
+                new Randevu { Id = 3, CalisanId = 3, IslemId = 5, Tarih = DateTime.UtcNow.AddDays(3), KullaniciId = 4, Kazanc = 200, IslemSuresi = 90, Durum = "Reddedildi" },
+                new Randevu { Id = 4, CalisanId = 4, IslemId = 9, Tarih = DateTime.UtcNow.AddDays(4), KullaniciId = 5, Kazanc = 250, IslemSuresi = 120, Durum = "Beklemede" }
             );
         }
     }

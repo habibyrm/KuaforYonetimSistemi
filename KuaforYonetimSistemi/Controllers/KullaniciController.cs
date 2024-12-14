@@ -63,7 +63,13 @@ namespace KuaforYonetimSistemi.Controllers
             {
                 // Kullanıcı bilgilerini Session'a kaydet
                 HttpContext.Session.SetString("KullaniciId", kullanici.Id.ToString());
-                HttpContext.Session.SetString("AdminMi", (kullanici.Rol == "Admin").ToString());
+                HttpContext.Session.SetString("Rol", kullanici.Rol); // Kullanıcının rolü kaydediliyor
+
+                // Admin kullanıcı ise admin paneline yönlendir
+                if (kullanici.Rol == "Admin")
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
 
                 // Giriş başarılı, Home controller'a yönlendir
                 return RedirectToAction("Index", "Home");
@@ -72,6 +78,7 @@ namespace KuaforYonetimSistemi.Controllers
             ViewBag.Hata = "Hatalı giriş! Lütfen bilgilerinizi kontrol edin.";
             return View();
         }
+
 
         public IActionResult CikisYap()
         {

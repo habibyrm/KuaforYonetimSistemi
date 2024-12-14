@@ -1,0 +1,41 @@
+﻿@model IEnumerable<KuaforYonetimSistemi.Models.Randevu>
+
+<div class="container mt-5">
+    <h1 class="text-center">Admin Paneli</h1>
+    <h3 class="text-center mt-4">Bekleyen Randevular</h3>
+
+    <table class="table table-bordered mt-4">
+        <thead class="table-dark">
+            <tr>
+                <th>Kullanıcı</th>
+                <th>Çalışan</th>
+                <th>İşlem</th>
+                <th>Tarih</th>
+                <th>Durum</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var randevu in Model)
+            {
+                <tr>
+                    <td>@randevu.Kullanici.KullaniciAdi</td>
+                    <td>@randevu.Calisan.AdSoyad</td>
+                    <td>@randevu.Islem.Ad</td>
+                    <td>@randevu.Tarih.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@randevu.Durum</td>
+                    <td>
+                        <form asp-action="Onayla" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@randevu.Id" />
+                            <button class="btn btn-success btn-sm">Onayla</button>
+                        </form>
+                        <form asp-action="Reddet" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@randevu.Id" />
+                            <button class="btn btn-danger btn-sm">Reddet</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
