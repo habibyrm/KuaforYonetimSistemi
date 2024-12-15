@@ -212,63 +212,63 @@ namespace KuaforYonetimSistemi.Migrations
                         {
                             Id = 1,
                             Ad = "Saç Kesimi",
-                            Sure = 0,
-                            Ucret = 50m
+                            Sure = 40,
+                            Ucret = 250m
                         },
                         new
                         {
                             Id = 2,
                             Ad = "Saç Boyama",
-                            Sure = 0,
-                            Ucret = 150m
+                            Sure = 175,
+                            Ucret = 1500m
                         },
                         new
                         {
                             Id = 3,
                             Ad = "Fön Çekme",
-                            Sure = 0,
-                            Ucret = 30m
+                            Sure = 20,
+                            Ucret = 200m
                         },
                         new
                         {
                             Id = 4,
                             Ad = "Saç Bakımı",
-                            Sure = 0,
-                            Ucret = 120m
+                            Sure = 200,
+                            Ucret = 820m
                         },
                         new
                         {
                             Id = 5,
                             Ad = "Perma",
-                            Sure = 0,
-                            Ucret = 200m
+                            Sure = 180,
+                            Ucret = 1000m
                         },
                         new
                         {
                             Id = 6,
                             Ad = "Manikür",
-                            Sure = 0,
-                            Ucret = 80m
+                            Sure = 40,
+                            Ucret = 150m
                         },
                         new
                         {
                             Id = 7,
                             Ad = "Pedikür",
-                            Sure = 0,
-                            Ucret = 90m
+                            Sure = 40,
+                            Ucret = 150m
                         },
                         new
                         {
                             Id = 8,
                             Ad = "Kaş Alma",
-                            Sure = 0,
-                            Ucret = 40m
+                            Sure = 20,
+                            Ucret = 50m
                         },
                         new
                         {
                             Id = 9,
                             Ad = "Makyaj",
-                            Sure = 0,
+                            Sure = 40,
                             Ucret = 250m
                         });
                 });
@@ -391,47 +391,267 @@ namespace KuaforYonetimSistemi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = 6,
                             CalisanId = 1,
                             Durum = "Onaylandı",
                             IslemId = 1,
-                            IslemSuresi = 30,
-                            Kazanc = 50m,
+                            IslemSuresi = 40,
+                            Kazanc = 250m,
                             KullaniciId = 2,
-                            Tarih = new DateTime(2024, 12, 15, 12, 11, 9, 183, DateTimeKind.Utc).AddTicks(5995)
+                            Tarih = new DateTime(2024, 12, 14, 9, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 7,
+                            CalisanId = 2,
+                            Durum = "Beklemede",
+                            IslemId = 2,
+                            IslemSuresi = 175,
+                            Kazanc = 1500m,
+                            KullaniciId = 3,
+                            Tarih = new DateTime(2024, 12, 14, 11, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CalisanId = 3,
+                            Durum = "Onaylandı",
+                            IslemId = 3,
+                            IslemSuresi = 20,
+                            Kazanc = 200m,
+                            KullaniciId = 4,
+                            Tarih = new DateTime(2024, 12, 14, 14, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CalisanId = 4,
+                            Durum = "Beklemede",
+                            IslemId = 4,
+                            IslemSuresi = 200,
+                            Kazanc = 820m,
+                            KullaniciId = 5,
+                            Tarih = new DateTime(2024, 12, 15, 10, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CalisanId = 5,
+                            Durum = "Reddedildi",
+                            IslemId = 5,
+                            IslemSuresi = 180,
+                            Kazanc = 1000m,
+                            KullaniciId = 2,
+                            Tarih = new DateTime(2024, 12, 15, 13, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CalisanId = 1,
+                            Durum = "Onaylandı",
+                            IslemId = 6,
+                            IslemSuresi = 40,
+                            Kazanc = 150m,
+                            KullaniciId = 3,
+                            Tarih = new DateTime(2024, 12, 15, 15, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CalisanId = 2,
+                            Durum = "Beklemede",
+                            IslemId = 7,
+                            IslemSuresi = 40,
+                            Kazanc = 150m,
+                            KullaniciId = 4,
+                            Tarih = new DateTime(2024, 12, 16, 9, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CalisanId = 3,
+                            Durum = "Onaylandı",
+                            IslemId = 8,
+                            IslemSuresi = 20,
+                            Kazanc = 50m,
+                            KullaniciId = 5,
+                            Tarih = new DateTime(2024, 12, 16, 12, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CalisanId = 4,
+                            Durum = "Reddedildi",
+                            IslemId = 9,
+                            IslemSuresi = 40,
+                            Kazanc = 250m,
+                            KullaniciId = 2,
+                            Tarih = new DateTime(2024, 12, 16, 15, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CalisanId = 5,
+                            Durum = "Onaylandı",
+                            IslemId = 1,
+                            IslemSuresi = 40,
+                            Kazanc = 250m,
+                            KullaniciId = 3,
+                            Tarih = new DateTime(2024, 12, 17, 10, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CalisanId = 1,
+                            Durum = "Beklemede",
+                            IslemId = 2,
+                            IslemSuresi = 175,
+                            Kazanc = 1500m,
+                            KullaniciId = 4,
+                            Tarih = new DateTime(2024, 12, 17, 12, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CalisanId = 2,
+                            Durum = "Onaylandı",
+                            IslemId = 3,
+                            IslemSuresi = 20,
+                            Kazanc = 200m,
+                            KullaniciId = 5,
+                            Tarih = new DateTime(2024, 12, 17, 16, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CalisanId = 3,
+                            Durum = "Beklemede",
+                            IslemId = 4,
+                            IslemSuresi = 200,
+                            Kazanc = 820m,
+                            KullaniciId = 2,
+                            Tarih = new DateTime(2024, 12, 18, 9, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CalisanId = 4,
+                            Durum = "Reddedildi",
+                            IslemId = 5,
+                            IslemSuresi = 180,
+                            Kazanc = 1000m,
+                            KullaniciId = 3,
+                            Tarih = new DateTime(2024, 12, 18, 11, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CalisanId = 5,
+                            Durum = "Onaylandı",
+                            IslemId = 6,
+                            IslemSuresi = 40,
+                            Kazanc = 150m,
+                            KullaniciId = 4,
+                            Tarih = new DateTime(2024, 12, 18, 14, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CalisanId = 1,
+                            Durum = "Beklemede",
+                            IslemId = 7,
+                            IslemSuresi = 40,
+                            Kazanc = 150m,
+                            KullaniciId = 5,
+                            Tarih = new DateTime(2024, 12, 19, 10, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CalisanId = 2,
+                            Durum = "Onaylandı",
+                            IslemId = 8,
+                            IslemSuresi = 20,
+                            Kazanc = 50m,
+                            KullaniciId = 2,
+                            Tarih = new DateTime(2024, 12, 19, 13, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CalisanId = 3,
+                            Durum = "Reddedildi",
+                            IslemId = 9,
+                            IslemSuresi = 40,
+                            Kazanc = 250m,
+                            KullaniciId = 3,
+                            Tarih = new DateTime(2024, 12, 19, 15, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CalisanId = 4,
+                            Durum = "Onaylandı",
+                            IslemId = 1,
+                            IslemSuresi = 40,
+                            Kazanc = 250m,
+                            KullaniciId = 4,
+                            Tarih = new DateTime(2024, 12, 20, 9, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CalisanId = 5,
+                            Durum = "Beklemede",
+                            IslemId = 2,
+                            IslemSuresi = 175,
+                            Kazanc = 1500m,
+                            KullaniciId = 5,
+                            Tarih = new DateTime(2024, 12, 20, 11, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CalisanId = 1,
+                            Durum = "Onaylandı",
+                            IslemId = 3,
+                            IslemSuresi = 20,
+                            Kazanc = 200m,
+                            KullaniciId = 2,
+                            Tarih = new DateTime(2024, 12, 20, 14, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 27,
                             CalisanId = 2,
                             Durum = "Beklemede",
                             IslemId = 4,
-                            IslemSuresi = 60,
-                            Kazanc = 120m,
+                            IslemSuresi = 200,
+                            Kazanc = 820m,
                             KullaniciId = 3,
-                            Tarih = new DateTime(2024, 12, 16, 12, 11, 9, 183, DateTimeKind.Utc).AddTicks(7418)
+                            Tarih = new DateTime(2024, 12, 21, 10, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 28,
                             CalisanId = 3,
                             Durum = "Reddedildi",
                             IslemId = 5,
-                            IslemSuresi = 90,
-                            Kazanc = 200m,
+                            IslemSuresi = 180,
+                            Kazanc = 1000m,
                             KullaniciId = 4,
-                            Tarih = new DateTime(2024, 12, 17, 12, 11, 9, 183, DateTimeKind.Utc).AddTicks(7441)
+                            Tarih = new DateTime(2024, 12, 21, 13, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 29,
                             CalisanId = 4,
-                            Durum = "Beklemede",
-                            IslemId = 9,
-                            IslemSuresi = 120,
-                            Kazanc = 250m,
+                            Durum = "Onaylandı",
+                            IslemId = 6,
+                            IslemSuresi = 40,
+                            Kazanc = 150m,
                             KullaniciId = 5,
-                            Tarih = new DateTime(2024, 12, 18, 12, 11, 9, 183, DateTimeKind.Utc).AddTicks(7444)
+                            Tarih = new DateTime(2024, 12, 21, 15, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });
 

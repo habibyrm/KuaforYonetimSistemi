@@ -81,16 +81,6 @@ namespace KuaforYonetimSistemi.Controllers
                 return RedirectToAction("Index");
             }
 
-            var randevuSaati = tarih.TimeOfDay;
-            var baslangicSaati = new TimeSpan(9, 0, 0);
-            var bitisSaati = new TimeSpan(20, 0, 0);
-
-            if (randevuSaati < baslangicSaati || randevuSaati > bitisSaati)
-            {
-                TempData["Error"] = "Randevular yalnızca 09:00 ile 20:00 saatleri arasında alınabilir.";
-                return RedirectToAction("Index");
-            }
-
             var islem = _context.Islem.FirstOrDefault(i => i.Id == islemId);
             if (islem == null)
             {
@@ -98,15 +88,31 @@ namespace KuaforYonetimSistemi.Controllers
                 return RedirectToAction("Index");
             }
 
-            var mevcutRandevu = _context.Randevu
-                .FirstOrDefault(r => r.CalisanId == calisanId && r.Tarih == tarih);
+            // İşlem süresi
+            var islemSuresi = islem.Sure;
 
-            if (mevcutRandevu != null)
+            // Randevu çakışması kontrolü
+            var randevuBitisSaati = tarih.AddMinutes(islemSuresi);
+
+            var calisanRandevular = _context.Randevu
+                .Where(r => r.CalisanId == calisanId && r.Durum == "Onaylandı")
+                .ToList();
+
+            foreach (var r in calisanRandevular)
             {
-                TempData["Error"] = "Bu tarihte bu çalışandan randevu alınmış.";
-                return RedirectToAction("Index");
+                var mevcutRandevuBaslangic = r.Tarih;
+                var mevcutRandevuBitis = r.Tarih.AddMinutes(r.IslemSuresi);
+
+                // Çakışma kontrolü
+                if ((tarih >= mevcutRandevuBaslangic && tarih < mevcutRandevuBitis) ||
+                    (randevuBitisSaati > mevcutRandevuBaslangic && randevuBitisSaati <= mevcutRandevuBitis))
+                {
+                    TempData["Error"] = "Bu saat aralığında bu çalışandan randevu alınamaz.";
+                    return RedirectToAction("Index");
+                }
             }
 
+            // Yeni randevuyu kaydet
             var yeniRandevu = new Randevu
             {
                 CalisanId = calisanId,
@@ -114,7 +120,8 @@ namespace KuaforYonetimSistemi.Controllers
                 Tarih = tarih,
                 KullaniciId = int.Parse(kullaniciId),
                 Kazanc = islem.Ucret,
-                IslemSuresi = islem.Sure
+                IslemSuresi = islemSuresi,
+                Durum = "Beklemede" // Yeni randevu durumu beklemede olarak ayarlanır
             };
 
             _context.Randevu.Add(yeniRandevu);
@@ -123,5 +130,6 @@ namespace KuaforYonetimSistemi.Controllers
             TempData["Success"] = "Randevunuz başarıyla oluşturuldu.";
             return RedirectToAction("Index");
         }
+
     }
 }

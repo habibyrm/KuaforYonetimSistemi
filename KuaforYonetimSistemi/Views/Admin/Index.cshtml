@@ -10,7 +10,8 @@
                 <th>Kullanıcı</th>
                 <th>Çalışan</th>
                 <th>İşlem</th>
-                <th>Tarih</th>
+                <th>Başlangıç</th>
+                <th>Bitiş</th>
                 <th>Durum</th>
                 <th>İşlemler</th>
             </tr>
@@ -23,6 +24,7 @@
                     <td>@randevu.Calisan.AdSoyad</td>
                     <td>@randevu.Islem.Ad</td>
                     <td>@randevu.Tarih.ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@randevu.Tarih.AddMinutes(randevu.IslemSuresi).ToString("dd.MM.yyyy HH:mm")</td>
                     <td>@randevu.Durum</td>
                     <td>
                         <form asp-action="Onayla" method="post" class="d-inline">

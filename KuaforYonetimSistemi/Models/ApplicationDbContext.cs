@@ -75,15 +75,15 @@ namespace KuaforYonetimSistemi.Models
 
             // İşlemler
             modelBuilder.Entity<Islem>().HasData(
-                new Islem { Id = 1, Ad = "Saç Kesimi", Ucret = 50 },
-                new Islem { Id = 2, Ad = "Saç Boyama", Ucret = 150 },
-                new Islem { Id = 3, Ad = "Fön Çekme", Ucret = 30 },
-                new Islem { Id = 4, Ad = "Saç Bakımı", Ucret = 120 },
-                new Islem { Id = 5, Ad = "Perma", Ucret = 200 },
-                new Islem { Id = 6, Ad = "Manikür", Ucret = 80 },
-                new Islem { Id = 7, Ad = "Pedikür", Ucret = 90 },
-                new Islem { Id = 8, Ad = "Kaş Alma", Ucret = 40 },
-                new Islem { Id = 9, Ad = "Makyaj", Ucret = 250 }
+                new Islem { Id = 1, Ad = "Saç Kesimi", Ucret = 250, Sure = 40 },
+                new Islem { Id = 2, Ad = "Saç Boyama", Ucret = 1500, Sure = 175 },
+                new Islem { Id = 3, Ad = "Fön Çekme", Ucret = 200, Sure = 20 },
+                new Islem { Id = 4, Ad = "Saç Bakımı", Ucret = 820, Sure = 200 },
+                new Islem { Id = 5, Ad = "Perma", Ucret = 1000, Sure = 180 },
+                new Islem { Id = 6, Ad = "Manikür", Ucret = 150, Sure = 40 },
+                new Islem { Id = 7, Ad = "Pedikür", Ucret = 150, Sure = 40 },
+                new Islem { Id = 8, Ad = "Kaş Alma", Ucret = 50, Sure = 20 },
+                new Islem { Id = 9, Ad = "Makyaj", Ucret = 250, Sure = 40 }
             );
 
             // Kullanıcılar
@@ -113,13 +113,50 @@ namespace KuaforYonetimSistemi.Models
                 new CalisanIslem { Id = 14, CalisanId = 5, IslemId = 8 }
             );
 
-            // Randevular
+            // Bugünden Başlayan ve 7 Günlük Randevular
             modelBuilder.Entity<Randevu>().HasData(
-                new Randevu { Id = 1, CalisanId = 1, IslemId = 1, Tarih = DateTime.UtcNow.AddDays(1), KullaniciId = 2, Kazanc = 50, IslemSuresi = 30, Durum = "Onaylandı" },
-                new Randevu { Id = 2, CalisanId = 2, IslemId = 4, Tarih = DateTime.UtcNow.AddDays(2), KullaniciId = 3, Kazanc = 120, IslemSuresi = 60, Durum = "Beklemede" },
-                new Randevu { Id = 3, CalisanId = 3, IslemId = 5, Tarih = DateTime.UtcNow.AddDays(3), KullaniciId = 4, Kazanc = 200, IslemSuresi = 90, Durum = "Reddedildi" },
-                new Randevu { Id = 4, CalisanId = 4, IslemId = 9, Tarih = DateTime.UtcNow.AddDays(4), KullaniciId = 5, Kazanc = 250, IslemSuresi = 120, Durum = "Beklemede" }
-            );
+            // Bugün için
+            new Randevu { Id = 6, CalisanId = 1, IslemId = 1, Tarih = DateTime.UtcNow.Date.AddHours(9), KullaniciId = 2, Kazanc = 250, IslemSuresi = 40, Durum = "Onaylandı" },
+            new Randevu { Id = 7, CalisanId = 2, IslemId = 2, Tarih = DateTime.UtcNow.Date.AddHours(11), KullaniciId = 3, Kazanc = 1500, IslemSuresi = 175, Durum = "Beklemede" },
+            new Randevu { Id = 8, CalisanId = 3, IslemId = 3, Tarih = DateTime.UtcNow.Date.AddHours(14), KullaniciId = 4, Kazanc = 200, IslemSuresi = 20, Durum = "Onaylandı" },
+        
+            // Yarın için
+            new Randevu { Id = 9, CalisanId = 4, IslemId = 4, Tarih = DateTime.UtcNow.AddDays(1).Date.AddHours(10), KullaniciId = 5, Kazanc = 820, IslemSuresi = 200, Durum = "Beklemede" },
+            new Randevu { Id = 10, CalisanId = 5, IslemId = 5, Tarih = DateTime.UtcNow.AddDays(1).Date.AddHours(13), KullaniciId = 2, Kazanc = 1000, IslemSuresi = 180, Durum = "Reddedildi" },
+            new Randevu { Id = 11, CalisanId = 1, IslemId = 6, Tarih = DateTime.UtcNow.AddDays(1).Date.AddHours(15), KullaniciId = 3, Kazanc = 150, IslemSuresi = 40, Durum = "Onaylandı" },
+        
+            // 2 gün sonrası
+            new Randevu { Id = 12, CalisanId = 2, IslemId = 7, Tarih = DateTime.UtcNow.AddDays(2).Date.AddHours(9), KullaniciId = 4, Kazanc = 150, IslemSuresi = 40, Durum = "Beklemede" },
+            new Randevu { Id = 13, CalisanId = 3, IslemId = 8, Tarih = DateTime.UtcNow.AddDays(2).Date.AddHours(12), KullaniciId = 5, Kazanc = 50, IslemSuresi = 20, Durum = "Onaylandı" },
+            new Randevu { Id = 14, CalisanId = 4, IslemId = 9, Tarih = DateTime.UtcNow.AddDays(2).Date.AddHours(15), KullaniciId = 2, Kazanc = 250, IslemSuresi = 40, Durum = "Reddedildi" },
+        
+            // 3 gün sonrası
+            new Randevu { Id = 15, CalisanId = 5, IslemId = 1, Tarih = DateTime.UtcNow.AddDays(3).Date.AddHours(10), KullaniciId = 3, Kazanc = 250, IslemSuresi = 40, Durum = "Onaylandı" },
+            new Randevu { Id = 16, CalisanId = 1, IslemId = 2, Tarih = DateTime.UtcNow.AddDays(3).Date.AddHours(12), KullaniciId = 4, Kazanc = 1500, IslemSuresi = 175, Durum = "Beklemede" },
+            new Randevu { Id = 17, CalisanId = 2, IslemId = 3, Tarih = DateTime.UtcNow.AddDays(3).Date.AddHours(16), KullaniciId = 5, Kazanc = 200, IslemSuresi = 20, Durum = "Onaylandı" },
+        
+            // 4 gün sonrası
+            new Randevu { Id = 18, CalisanId = 3, IslemId = 4, Tarih = DateTime.UtcNow.AddDays(4).Date.AddHours(9), KullaniciId = 2, Kazanc = 820, IslemSuresi = 200, Durum = "Beklemede" },
+            new Randevu { Id = 19, CalisanId = 4, IslemId = 5, Tarih = DateTime.UtcNow.AddDays(4).Date.AddHours(11), KullaniciId = 3, Kazanc = 1000, IslemSuresi = 180, Durum = "Reddedildi" },
+            new Randevu { Id = 20, CalisanId = 5, IslemId = 6, Tarih = DateTime.UtcNow.AddDays(4).Date.AddHours(14), KullaniciId = 4, Kazanc = 150, IslemSuresi = 40, Durum = "Onaylandı" },
+        
+            // 5 gün sonrası
+            new Randevu { Id = 21, CalisanId = 1, IslemId = 7, Tarih = DateTime.UtcNow.AddDays(5).Date.AddHours(10), KullaniciId = 5, Kazanc = 150, IslemSuresi = 40, Durum = "Beklemede" },
+            new Randevu { Id = 22, CalisanId = 2, IslemId = 8, Tarih = DateTime.UtcNow.AddDays(5).Date.AddHours(13), KullaniciId = 2, Kazanc = 50, IslemSuresi = 20, Durum = "Onaylandı" },
+            new Randevu { Id = 23, CalisanId = 3, IslemId = 9, Tarih = DateTime.UtcNow.AddDays(5).Date.AddHours(15), KullaniciId = 3, Kazanc = 250, IslemSuresi = 40, Durum = "Reddedildi" },
+        
+            // 6 gün sonrası
+            new Randevu { Id = 24, CalisanId = 4, IslemId = 1, Tarih = DateTime.UtcNow.AddDays(6).Date.AddHours(9), KullaniciId = 4, Kazanc = 250, IslemSuresi = 40, Durum = "Onaylandı" },
+            new Randevu { Id = 25, CalisanId = 5, IslemId = 2, Tarih = DateTime.UtcNow.AddDays(6).Date.AddHours(11), KullaniciId = 5, Kazanc = 1500, IslemSuresi = 175, Durum = "Beklemede" },
+            new Randevu { Id = 26, CalisanId = 1, IslemId = 3, Tarih = DateTime.UtcNow.AddDays(6).Date.AddHours(14), KullaniciId = 2, Kazanc = 200, IslemSuresi = 20, Durum = "Onaylandı" },
+        
+            // 7 gün sonrası
+            new Randevu { Id = 27, CalisanId = 2, IslemId = 4, Tarih = DateTime.UtcNow.AddDays(7).Date.AddHours(10), KullaniciId = 3, Kazanc = 820, IslemSuresi = 200, Durum = "Beklemede" },
+            new Randevu { Id = 28, CalisanId = 3, IslemId = 5, Tarih = DateTime.UtcNow.AddDays(7).Date.AddHours(13), KullaniciId = 4, Kazanc = 1000, IslemSuresi = 180, Durum = "Reddedildi" },
+            new Randevu { Id = 29, CalisanId = 4, IslemId = 6, Tarih = DateTime.UtcNow.AddDays(7).Date.AddHours(15), KullaniciId = 5, Kazanc = 150, IslemSuresi = 40, Durum = "Onaylandı" }
+        );
+        
         }
+
     }
 }

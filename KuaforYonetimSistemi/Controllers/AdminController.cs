@@ -82,25 +82,19 @@ namespace KuaforYonetimSistemi.Controllers
             }
 
             var bugun = DateTime.Today;
-            var birHaftaOnce = bugun.AddDays(-7);
-
-            var verimlilik = _context.Randevu
+            var calisanVerimlilik = _context.Randevu
                 .Include(r => r.Calisan)
-                .Where(r => r.Durum == "Onaylandı" && r.Tarih >= birHaftaOnce && r.Tarih <= bugun)
+                .Where(r => r.Tarih.Date == bugun && r.Durum == "Onaylandı")
                 .GroupBy(r => r.Calisan.AdSoyad)
                 .Select(g => new
                 {
                     Calisan = g.Key,
-                    TamamlananRandevuSayisi = g.Count(),
+                    ToplamSure = g.Sum(r => r.IslemSuresi),
                     ToplamKazanc = g.Sum(r => r.Kazanc)
                 }).ToList();
 
-            var gunlukKazanc = _context.Randevu
-                .Where(r => r.Durum == "Onaylandı" && r.Tarih.Date == bugun)
-                .Sum(r => r.Kazanc);
-
-            ViewBag.GunlukKazanc = gunlukKazanc;
-            return View(verimlilik);
+            ViewBag.Bugun = bugun.ToString("dd.MM.yyyy");
+            return View(calisanVerimlilik);
         }
     }
 }
