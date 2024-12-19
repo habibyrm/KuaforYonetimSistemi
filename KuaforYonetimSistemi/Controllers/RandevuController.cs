@@ -15,6 +15,11 @@ namespace KuaforYonetimSistemi.Controllers
 
         public IActionResult Index(int? calisanId, int? islemId)
         {
+            var kullaniciId = HttpContext.Session.GetString("KullaniciId");
+            if (string.IsNullOrEmpty(kullaniciId))
+            {
+                return RedirectToAction("GirisYap", "Kullanici");
+            }
             ViewBag.SelectedCalisanId = calisanId;
             ViewBag.SelectedIslemId = islemId;
 
@@ -42,7 +47,8 @@ namespace KuaforYonetimSistemi.Controllers
 
             if (calisan == null || islem == null)
             {
-                return NotFound("Geçersiz çalışan veya işlem seçimi.");
+                TempData["Error"] = "Geçersiz çalışan veya işlem seçimi.";
+                return RedirectToAction("Index");
             }
 
             ViewBag.Calisan = calisan;
@@ -54,12 +60,6 @@ namespace KuaforYonetimSistemi.Controllers
         [HttpGet]
         public IActionResult Tamamla(int calisanId, int islemId)
         {
-            var kullaniciId = HttpContext.Session.GetString("KullaniciId");
-            if (string.IsNullOrEmpty(kullaniciId))
-            {
-                return RedirectToAction("GirisYap", "Kullanici");
-            }
-
             ViewBag.Calisan = _context.Calisan.Find(calisanId);
             ViewBag.Islem = _context.Islem.Find(islemId);
 
@@ -69,12 +69,6 @@ namespace KuaforYonetimSistemi.Controllers
         [HttpPost]
         public IActionResult Tamamla(int calisanId, int islemId, DateTime tarih)
         {
-            var kullaniciId = HttpContext.Session.GetString("KullaniciId");
-            if (string.IsNullOrEmpty(kullaniciId))
-            {
-                return RedirectToAction("GirisYap", "Kullanici");
-            }
-
             if (tarih <= DateTime.Now)
             {
                 TempData["Error"] = "Geçmiş bir tarihle randevu oluşturulamaz.";
@@ -118,7 +112,7 @@ namespace KuaforYonetimSistemi.Controllers
                 CalisanId = calisanId,
                 IslemId = islemId,
                 Tarih = tarih,
-                KullaniciId = int.Parse(kullaniciId),
+                KullaniciId = int.Parse(HttpContext.Session.GetString("KullaniciId")),
                 Kazanc = islem.Ucret,
                 IslemSuresi = islemSuresi,
                 Durum = "Beklemede" // Yeni randevu durumu beklemede olarak ayarlanır

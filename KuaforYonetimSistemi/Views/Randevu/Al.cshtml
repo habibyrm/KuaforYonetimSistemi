@@ -1,18 +1,37 @@
-﻿@model KuaforYonetimSistemi.Models.Randevu
+﻿@{
+    ViewData["Title"] = "Randevu Al";
+}
 
-<h1>Randevu Al</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Randevu Al</h1>
 
-<p><strong>Çalışan:</strong> @ViewBag.Calisan.AdSoyad</p>
-<p><strong>İşlem:</strong> @ViewBag.Islem.Ad</p>
-
-<form method="post" asp-action="Tamamla">
-    <input type="hidden" name="calisanId" value="@ViewBag.Calisan.Id" />
-    <input type="hidden" name="islemId" value="@ViewBag.Islem.Id" />
-
-    <div>
-        <label for="tarih">Randevu Tarihi:</label>
-        <input type="datetime-local" name="tarih" id="tarih" required />
+    <div class="card shadow p-4">
+        <p><strong>Çalışan:</strong> @ViewBag.Calisan?.AdSoyad</p>
+        <p><strong>İşlem:</strong> @ViewBag.Islem?.Ad</p>
     </div>
 
-    <button type="submit">Randevuyu Tamamla</button>
-</form>
+    <form method="post" asp-action="Tamamla" class="mt-4">
+        <input type="hidden" name="calisanId" value="@ViewBag.Calisan?.Id" />
+        <input type="hidden" name="islemId" value="@ViewBag.Islem?.Id" />
+
+        <div class="mb-3">
+            <label for="tarih" class="form-label">Randevu Tarihi:</label>
+            <input type="datetime-local" class="form-control" name="tarih" id="tarih" required />
+        </div>
+
+        <button type="submit" class="btn btn-success">Randevuyu Tamamla</button>
+    </form>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger mt-3">
+            <strong>Hata:</strong> @TempData["Error"]
+        </div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success mt-3">
+            <strong>Başarılı:</strong> @TempData["Success"]
+        </div>
+    }
+</div>

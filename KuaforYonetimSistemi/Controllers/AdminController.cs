@@ -27,16 +27,16 @@ namespace KuaforYonetimSistemi.Controllers
             {
                 return RedirectToAction("GirisYap", "Kullanici");
             }
-
-            var bekleyenRandevular = _context.Randevu
+            // Tüm randevuları çek
+            var randevular = _context.Randevu
+                .Include(r => r.Kullanici)
                 .Include(r => r.Calisan)
                 .Include(r => r.Islem)
-                .Include(r => r.Kullanici)
-                .Where(r => r.Durum == "Beklemede")
                 .ToList();
 
-            return View(bekleyenRandevular);
+            return View(randevular);
         }
+
 
         [HttpPost]
         public IActionResult Onayla(int id)

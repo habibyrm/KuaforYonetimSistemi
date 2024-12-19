@@ -2,42 +2,99 @@
 
 <div class="container mt-5">
     <h1 class="text-center">Admin Paneli</h1>
-    <h3 class="text-center mt-4">Bekleyen Randevular</h3>
 
-    <table class="table table-bordered mt-4">
-        <thead class="table-dark">
-            <tr>
-                <th>Kullanıcı</th>
-                <th>Çalışan</th>
-                <th>İşlem</th>
-                <th>Başlangıç</th>
-                <th>Bitiş</th>
-                <th>Durum</th>
-                <th>İşlemler</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var randevu in Model)
-            {
-                <tr>
-                    <td>@randevu.Kullanici.KullaniciAdi</td>
-                    <td>@randevu.Calisan.AdSoyad</td>
-                    <td>@randevu.Islem.Ad</td>
-                    <td>@randevu.Tarih.ToString("dd.MM.yyyy HH:mm")</td>
-                    <td>@randevu.Tarih.AddMinutes(randevu.IslemSuresi).ToString("dd.MM.yyyy HH:mm")</td>
-                    <td>@randevu.Durum</td>
-                    <td>
-                        <form asp-action="Onayla" method="post" class="d-inline">
-                            <input type="hidden" name="id" value="@randevu.Id" />
-                            <button class="btn btn-success btn-sm">Onayla</button>
-                        </form>
-                        <form asp-action="Reddet" method="post" class="d-inline">
-                            <input type="hidden" name="id" value="@randevu.Id" />
-                            <button class="btn btn-danger btn-sm">Reddet</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <!-- Tab Menüsü -->
+    <ul class="nav nav-tabs mt-4" id="adminTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="bekleyen-tab" data-bs-toggle="tab" data-bs-target="#bekleyen" type="button" role="tab" aria-controls="bekleyen" aria-selected="true">Bekleyen Randevular</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="onaylanan-tab" data-bs-toggle="tab" data-bs-target="#onaylanan" type="button" role="tab" aria-controls="onaylanan" aria-selected="false">Onaylanmış Randevular</button>
+        </li>
+    </ul>
+
+    <!-- Tab İçeriği -->
+    <div class="tab-content mt-3" id="adminTabContent">
+        <!-- Bekleyen Randevular -->
+        <div class="tab-pane fade show active" id="bekleyen" role="tabpanel" aria-labelledby="bekleyen-tab">
+            <h3 class="text-center mt-4">Bekleyen Randevular</h3>
+
+            <table class="table table-bordered mt-4">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Kullanıcı</th>
+                        <th>Çalışan</th>
+                        <th>İşlem</th>
+                        <th>Başlangıç</th>
+                        <th>Bitiş</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var randevu in Model.Where(r => r.Durum == "Beklemede"))
+                    {
+                        <tr>
+                            <td>@randevu.Kullanici.KullaniciAdi</td>
+                            <td>@randevu.Calisan.AdSoyad</td>
+                            <td>@randevu.Islem.Ad</td>
+                            <td>@randevu.Tarih.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td>@randevu.Tarih.AddMinutes(randevu.IslemSuresi).ToString("dd.MM.yyyy HH:mm")</td>
+                            <td><span class="badge bg-warning">@randevu.Durum</span></td>
+                            <td>
+                                <form asp-action="Onayla" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@randevu.Id" />
+                                    <button class="btn btn-success btn-sm">Onayla</button>
+                                </form>
+                                <form asp-action="Reddet" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@randevu.Id" />
+                                    <button class="btn btn-danger btn-sm">Reddet</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Onaylanmış Randevular -->
+        <div class="container mt-5">
+            <h1 class="text-center">Onaylanmış Randevular</h1>
+
+            <table class="table table-bordered mt-4">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Kullanıcı</th>
+                        <th>Çalışan</th>
+                        <th>İşlem</th>
+                        <th>Başlangıç</th>
+                        <th>Bitiş</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var randevu in Model)
+                    {
+                        var durum = randevu.Tarih < DateTime.Now ? "Tamamlandı" : "Aktif";
+                        var durumRenk = randevu.Tarih < DateTime.Now ? "black" : "success";
+                        <!-- Renk belirleme -->
+
+                        <tr>
+                            <td>@randevu.Kullanici.KullaniciAdi</td>
+                            <td>@randevu.Calisan.AdSoyad</td>
+                            <td>@randevu.Islem.Ad</td>
+                            <td>@randevu.Tarih.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td>@randevu.Tarih.AddMinutes(randevu.IslemSuresi).ToString("dd.MM.yyyy HH:mm")</td>
+                            <td>
+                                <span class="badge bg-@durumRenk">@durum</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
+<!-- Bootstrap Script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
