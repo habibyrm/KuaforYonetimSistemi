@@ -26,27 +26,30 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <div class="col text-end">
-                            @if (string.IsNullOrEmpty(kullaniciId))
-                            {
-                                <a href="/Kullanici/GirisYap" class="btn btn-light">Giriş Yap</a>
-                            }
-                            else
-                            {
-                                <span>Hoşgeldiniz, @kullaniciAdi!</span>
-                                <a href="/Kullanici/CikisYap" class="btn btn-danger ms-2">Çıkış Yap</a>
-                            }
-                        </div>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Randevu" asp-action="Index">Randevu</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Raporlama</a>
-                        </li>
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("Rol") == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Raporlama</a>
+                            </li>
+                        }
                     </ul>
+                    <div class="text-end">
+                        @if (string.IsNullOrEmpty(kullaniciId))
+                        {
+                            <a href="/Kullanici/GirisYap" class="btn btn-light">Giriş Yap</a>
+                        }
+                        else
+                        {
+                            <span>Hoşgeldiniz, @kullaniciAdi!</span>
+                            <a href="/Kullanici/CikisYap" class="btn btn-danger ms-2">Çıkış Yap</a>
+                        }
+                    </div>
                 </div>
             </div>
         </nav>
@@ -58,8 +61,8 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - KuaforYonetimSistemi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="center">
+            &copy; 2024 - KuaforYonetimSistemi 
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

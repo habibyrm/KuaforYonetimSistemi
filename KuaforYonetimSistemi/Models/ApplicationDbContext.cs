@@ -9,7 +9,6 @@ namespace KuaforYonetimSistemi.Models
             : base(options)
         {
         }
-
         public DbSet<Kullanici> Kullanici { get; set; }
         public DbSet<Calisan> Calisan { get; set; }
         public DbSet<Islem> Islem { get; set; }
@@ -111,8 +110,7 @@ namespace KuaforYonetimSistemi.Models
                 new CalisanIslem { Id = 12, CalisanId = 5, IslemId = 2 },
                 new CalisanIslem { Id = 13, CalisanId = 5, IslemId = 4 },
                 new CalisanIslem { Id = 14, CalisanId = 5, IslemId = 8 }
-            );       
+            );        
         }
-
     }
 }
