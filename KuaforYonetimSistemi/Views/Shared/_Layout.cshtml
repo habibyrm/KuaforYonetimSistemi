@@ -32,6 +32,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Randevu" asp-action="Index">Randevu</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AI" asp-action="Index">AI</a>
+                        </li>
                         @if (HttpContextAccessor.HttpContext.Session.GetString("Rol") == "Admin")
                         {
                             <li class="nav-item">

@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Yapay Zeka ile Saç Modeli Önerisi";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Yapay Zeka ile Saç Modeli Önerisi</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="uploadedImage" class="form-label">Fotoğraf Yükleyin:</label>
+            <input type="file" class="form-control" id="uploadedImage" name="uploadedImage" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Gönder</button>
+    </form>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger mt-3">
+            <strong>Hata:</strong> @ViewBag.Error
+        </div>
+    }
+
+    @if (ViewBag.Result != null)
+    {
+        <div class="alert alert-success mt-3">
+            <strong>Sonuç:</strong>
+            <p>@ViewBag.Result</p>
+        </div>
+    }
+</div>
