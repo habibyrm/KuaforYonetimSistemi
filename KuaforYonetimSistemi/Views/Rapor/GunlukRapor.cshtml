@@ -1,0 +1,51 @@
+﻿@model List<KuaforYonetimSistemi.Models.RaporViewModel>
+
+@{
+    ViewData["Title"] = "Günlük Çalışma Raporu";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Günlük Çalışma Raporu</h1>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label for="tarih" class="form-label">Tarih Seç:</label>
+            <input type="date" id="tarih" name="tarih" class="form-control" />
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Rapor Getir</button>
+        </div>
+    </form>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <table class="table table-hover table-bordered text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Çalışan Adı</th>
+                    <th>Toplam Dakika</th>
+                    <th>Toplam Kazanç</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.CalisanAdi</td>
+                        <td>@item.ToplamSaat dakika</td>
+                        <td>@item.ToplamKazanc TL</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (Model != null)
+    {
+        <div class="alert alert-warning">Seçilen tarihe ait rapor bulunamadı.</div>
+    }
+</div>

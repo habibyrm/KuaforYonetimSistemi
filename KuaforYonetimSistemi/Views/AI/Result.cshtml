@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Doğrulama Sonucu";
+}
+
+<h2>Doğrulama Sonucu</h2>
+
+@if (ViewBag.Message != null)
+{
+    <p style="color:green">@ViewBag.Message</p>
+}
+else
+{
+    <p style="color:red">Bir hata oluştu.</p>
+}

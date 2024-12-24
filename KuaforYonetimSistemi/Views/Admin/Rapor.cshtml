@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Günlük Çalışma Raporu";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">Günlük Çalışma Raporu</h1>
+
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <label for="raporTarihi" class="form-label">Tarih Seç:</label>
+            <input type="date" id="raporTarihi" class="form-control" />
+        </div>
+        <div class="col-md-4 align-self-end">
+            <button id="raporGetir" class="btn btn-primary">Rapor Getir</button>
+        </div>
+    </div>
+
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>Çalışan Adı</th>
+                <th>Toplam Saat</th>
+                <th>Toplam Kazanç</th>
+            </tr>
+        </thead>
+        <tbody id="raporTablosu">
+            <!-- Dinamik olarak doldurulacak -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.getElementById("raporGetir").addEventListener("click", function () {
+        const tarih = document.getElementById("raporTarihi").value;
+
+        if (!tarih) {
+            alert("Lütfen bir tarih seçiniz.");
+            return;
+        }
+
+        fetch(`/api/raporapi/gunluk-rapor?tarih=${tarih}`)
+            .then(response => response.json())
+            .then(data => {
+                const tablo = document.getElementById("raporTablosu");
+                tablo.innerHTML = ""; // Önceki tabloyu temizle
+
+                if (data.length > 0) {
+                    data.forEach(item => {
+                        const row = `
+                            <tr>
+                                <td>${item.CalisanAdi}</td>
+                                <td>${item.ToplamSaat.toFixed(2)} saat</td>
+                                <td>${item.ToplamKazanc.toFixed(2)} TL</td>
+                            </tr>`;
+                        tablo.insertAdjacentHTML("beforeend", row);
+                    });
+                } else {
+                    tablo.innerHTML = '<tr><td colspan="3" class="text-center">Veri bulunamadı.</td></tr>';
+                }
+            })
+            .catch(error => console.error("API Hatası:", error));
+    });
+</script>

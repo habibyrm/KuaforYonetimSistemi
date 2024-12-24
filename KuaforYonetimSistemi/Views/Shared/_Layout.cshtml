@@ -38,7 +38,13 @@
                         @if (HttpContextAccessor.HttpContext.Session.GetString("Rol") == "Admin")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Raporlama</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Onaylama</a>
+                            </li>
+                        }
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("Rol") == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Rapor/GunlukRapor">Raporlama</a>
                             </li>
                         }
                     </ul>

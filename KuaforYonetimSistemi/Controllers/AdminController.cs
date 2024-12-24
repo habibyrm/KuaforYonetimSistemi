@@ -37,6 +37,10 @@ namespace KuaforYonetimSistemi.Controllers
             return View(randevular);
         }
 
+        public IActionResult Rapor()
+        {
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Onayla(int id)

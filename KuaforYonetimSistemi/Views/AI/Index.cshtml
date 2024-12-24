@@ -1,30 +1,38 @@
 ﻿@{
-    ViewData["Title"] = "Yapay Zeka ile Saç Modeli Önerisi";
+    ViewData["Title"] = "AI Saç Modeli Değiştirici";
 }
 
-<div class="container mt-5">
-    <h1 class="text-center mb-4">Yapay Zeka ile Saç Modeli Önerisi</h1>
+<h2>AI Saç Modeli Değiştirici</h2>
 
-    <form method="post" enctype="multipart/form-data">
-        <div class="mb-3">
-            <label for="uploadedImage" class="form-label">Fotoğraf Yükleyin:</label>
-            <input type="file" class="form-control" id="uploadedImage" name="uploadedImage" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Gönder</button>
-    </form>
+<form asp-action="UploadImage" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label for="image">Resim Yükle</label>
+        <input type="file" name="image" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label for="hairStyle">Saç Modeli Seçin</label>
+        <select name="hairStyle" class="form-control" required>
+            <option value="PixieCut">Pixie Cut</option>
+            <option value="BobCut">Bob Cut</option>
+            <option value="Curly">Curly</option>
+            <!-- Ek saç modelleri -->
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Gönder</button>
+</form>
 
-    @if (ViewBag.Error != null)
-    {
-        <div class="alert alert-danger mt-3">
-            <strong>Hata:</strong> @ViewBag.Error
-        </div>
-    }
+@if (ViewBag.ProcessedImageUrl != null)
+{
+    <h3>İşlenmiş Resim</h3>
+    <img src="@ViewBag.ProcessedImageUrl" alt="İşlenmiş Resim" class="img-fluid" />
+}
 
-    @if (ViewBag.Result != null)
-    {
-        <div class="alert alert-success mt-3">
-            <strong>Sonuç:</strong>
-            <p>@ViewBag.Result</p>
-        </div>
-    }
-</div>
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
