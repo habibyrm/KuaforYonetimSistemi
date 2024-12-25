@@ -62,15 +62,8 @@ namespace KuaforYonetimSistemi.Controllers
             if (kullanici != null && SifreDogrula(sifre, kullanici.Sifre))
             {
                 // Kullanıcı bilgilerini Session'a kaydet
-                HttpContext.Session.SetString("KullaniciId", kullanici.Id.ToString());
+                HttpContext.Session.SetInt32("KullaniciId", kullanici.Id);
                 HttpContext.Session.SetString("Rol", kullanici.Rol); // Kullanıcının rolü kaydediliyor
-
-                // Admin kullanıcı ise admin paneline yönlendir
-                if (kullanici.Rol == "Admin")
-                {
-                    return RedirectToAction("Index", "Admin");
-                }
-
                 // Giriş başarılı, Home controller'a yönlendir
                 return RedirectToAction("Index", "Home");
             }

@@ -1,6 +1,8 @@
 ﻿using KuaforYonetimSistemi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace KuaforYonetimSistemi.Controllers
 {
@@ -125,5 +127,38 @@ namespace KuaforYonetimSistemi.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> Randevularim()
+        {
+            List<RandevuViewModel> randevular = new List<RandevuViewModel>();
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var kullaniciId = HttpContext.Session.GetInt32("KullaniciId");
+                    if (!kullaniciId.HasValue)
+                    {
+                        return RedirectToAction("GirisYap", "Kullanici");
+                    }
+
+                    var response = await client.GetAsync($"https://localhost:7030/api/RandevuApi/kullanici-randevulari?kullaniciId={kullaniciId.Value}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string jsonData = await response.Content.ReadAsStringAsync();
+                        randevular = JsonConvert.DeserializeObject<List<RandevuViewModel>>(jsonData);
+                    }
+                    else
+                    {
+                        TempData["Error"] = $"API hatası: {response.ReasonPhrase}";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"Bir hata oluştu: {ex.Message}";
+            }
+
+            return View(randevular);
+        }
     }
 }

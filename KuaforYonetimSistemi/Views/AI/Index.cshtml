@@ -20,6 +20,12 @@
     </div>
     <button type="submit" class="btn btn-primary">Gönder</button>
 </form>
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        <p>@ViewBag.Error</p>
+    </div>
+}
 
 @if (ViewBag.ProcessedImageUrl != null)
 {

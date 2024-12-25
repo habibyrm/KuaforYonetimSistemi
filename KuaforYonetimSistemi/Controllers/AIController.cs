@@ -10,7 +10,7 @@ public class AIController : Controller
     public AIController()
     {
         _httpClient = new HttpClient();
-        _httpClient.DefaultRequestHeaders.Add("ailabapi-api-key", "YOUR_API_KEY"); // API anahtarınızı buraya ekleyin.
+        _httpClient.DefaultRequestHeaders.Add("ailabapi-api-key", "yZFRP8p1re69YDNOhSTKDUco7Suz3XybElm7snOk54WEXrtazbqljRHmteULdqC4"); // API anahtarınızı buraya ekleyin.
     }
 
     [HttpGet]
@@ -36,11 +36,11 @@ public class AIController : Controller
         }
         catch (HttpRequestException ex)
         {
-            ModelState.AddModelError(string.Empty, $"API hatası: {ex.Message}");
+            ViewBag.Error = $"API hatası: {ex.Message}";
         }
         catch (Exception ex)
         {
-            ModelState.AddModelError(string.Empty, $"Bilinmeyen hata: {ex.Message}");
+            ViewBag.Error = $"Bilinmeyen hata: {ex.Message}";
         }
 
         return View("Index");
@@ -62,13 +62,25 @@ public class AIController : Controller
         response.EnsureSuccessStatusCode();
 
         var responseData = await response.Content.ReadAsStringAsync();
+        Console.WriteLine($"API Yanıtı: {responseData}");
+
         var result = JsonConvert.DeserializeObject<ApiResponse>(responseData);
 
-        if (!string.IsNullOrEmpty(result.Data.ImageUrl))
+        if (result == null)
         {
-            return result.Data.ImageUrl;
+            throw new Exception("API'den beklenmeyen bir yanıt alındı.");
         }
 
-        throw new Exception("İşlenmiş resim URL'si alınamadı.");
+        if (result.ErrorCode != 0)
+        {
+            throw new Exception($"API Hatası: {result.ErrorMessage}");
+        }
+
+        if (result.Data == null || string.IsNullOrEmpty(result.Data.ImageUrl))
+        {
+            throw new Exception("İşlenmiş resim URL'si alınamadı.");
+        }
+
+        return result.Data.ImageUrl;
     }
 }
