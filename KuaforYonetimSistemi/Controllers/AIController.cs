@@ -50,6 +50,7 @@ public class AIController : Controller
     {
         string apiUrl = "https://www.ailabapi.com/api/portrait/effects/hairstyle-editor-pro";
 
+        // İlk istek: task_id almak için
         using var content = new MultipartFormDataContent();
         using var imageContent = new StreamContent(imageFile.OpenReadStream());
         imageContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
@@ -62,25 +63,42 @@ public class AIController : Controller
         response.EnsureSuccessStatusCode();
 
         var responseData = await response.Content.ReadAsStringAsync();
-        Console.WriteLine($"API Yanıtı: {responseData}");
+        Console.WriteLine($"API Yanıtı (İlk İstek): {responseData}");
 
         var result = JsonConvert.DeserializeObject<ApiResponse>(responseData);
 
-        if (result == null)
+        if (result == null || string.IsNullOrEmpty(result.TaskId))
         {
-            throw new Exception("API'den beklenmeyen bir yanıt alındı.");
+            throw new Exception("API, geçerli bir task_id döndürmedi.");
         }
 
-        if (result.ErrorCode != 0)
+        // İkinci istek: İşlenmiş resmi almak için
+        string queryUrl = $"https://www.ailabapi.com/api/common/query-async-task-result?task_id={result.TaskId}";
+
+        string processedImageUrl = await GetProcessedImageUrlAsync(queryUrl);
+        return processedImageUrl;
+    }
+
+    private async Task<string> GetProcessedImageUrlAsync(string queryUrl)
+    {
+        // İşlenmiş sonucu sorgulama
+        for (int i = 0; i < 10; i++) // 10 kez dene (timeout)
         {
-            throw new Exception($"API Hatası: {result.ErrorMessage}");
+            await Task.Delay(2000); // 2 saniye bekle
+            var response = await _httpClient.GetAsync(queryUrl);
+            response.EnsureSuccessStatusCode();
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"API Yanıtı (Sonuç Sorgusu): {responseData}");
+
+            var result = JsonConvert.DeserializeObject<AsyncTaskResponse>(responseData);
+
+            if (result != null && result.Data != null && !string.IsNullOrEmpty(result.Data.ImageUrl))
+            {
+                return result.Data.ImageUrl;
+            }
         }
 
-        if (result.Data == null || string.IsNullOrEmpty(result.Data.ImageUrl))
-        {
-            throw new Exception("İşlenmiş resim URL'si alınamadı.");
-        }
-
-        return result.Data.ImageUrl;
+        throw new Exception("API, işlenmiş resim URL'sini zamanında döndürmedi.");
     }
 }

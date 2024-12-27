@@ -114,7 +114,7 @@ namespace KuaforYonetimSistemi.Controllers
                 CalisanId = calisanId,
                 IslemId = islemId,
                 Tarih = tarih,
-                KullaniciId = int.Parse(HttpContext.Session.GetString("KullaniciId")),
+                KullaniciId = (int)HttpContext.Session.GetInt32("KullaniciId"),
                 Kazanc = islem.Ucret,
                 IslemSuresi = islemSuresi,
                 Durum = "Beklemede" // Yeni randevu durumu beklemede olarak ayarlanır
