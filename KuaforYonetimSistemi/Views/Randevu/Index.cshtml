@@ -55,6 +55,7 @@
                     <th>Çalışan</th>
                     <th>İşlem</th>
                     <th>Ücret</th>
+                    <th>Süre</th>
                     <th>Randevu Al</th>
                 </tr>
             </thead>
@@ -67,6 +68,7 @@
                             <td>@item.Calisan.AdSoyad</td>
                             <td>@item.Islem.Ad</td>
                             <td>@item.Islem.Ucret TL</td>
+                            <td>@item.Islem.Sure dk</td>
                             <td>
                                 <a href="/Randevu/Al?calisanId=@item.CalisanId&islemId=@item.IslemId" class="btn btn-primary btn-sm">
                                     Randevu Al
@@ -78,7 +80,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="4" class="text-muted">Bu kriterlere uygun kayıt bulunamadı.</td>
+                        <td colspan="5" class="text-muted">Bu kriterlere uygun kayıt bulunamadı.</td>
                     </tr>
                 }
             </tbody>
