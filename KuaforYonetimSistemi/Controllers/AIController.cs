@@ -10,7 +10,7 @@ public class AIController : Controller
     public AIController()
     {
         _httpClient = new HttpClient();
-        _httpClient.DefaultRequestHeaders.Add("ailabapi-api-key", "yZFRP8p1re69YDNOhSTKDUco7Suz3XybElm7snOk54WEXrtazbqljRHmteULdqC4"); // API anahtarınızı buraya ekleyin.
+        _httpClient.DefaultRequestHeaders.Add("****", "***"); // API anahtarınızı buraya ekleyin.
     }
 
     [HttpGet]
@@ -48,7 +48,7 @@ public class AIController : Controller
 
     private async Task<string> ChangeHairstyleAsync(IFormFile imageFile, string hairStyle)
     {
-        string apiUrl = "https://www.ailabapi.com/api/portrait/effects/hairstyle-editor-pro";
+        string apiUrl = "****";
 
         // İlk istek: task_id almak için
         using var content = new MultipartFormDataContent();
